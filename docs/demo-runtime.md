@@ -22,7 +22,7 @@ The playground opens in PHOSPHOR / 01, an original ANSI/Unicode diagnostics dash
 
 Long commands scroll horizontally while editing and appear in full when submitted. Bracketed paste inserts text, including newlines, without submitting it; Enter executes the complete script. Path completion reads directory entries and does not evaluate shell expressions. Quoted filenames work when executing commands.
 
-The dashboard adjusts its chart height to keep meters, history, events, and keyboard hints visible in short desktop terminals. Narrow terminals use stacked metrics and add history/events when space permits. Its animation pauses while hidden, and leaving the dashboard stops its timer.
+The dashboard adjusts its chart height to keep meters, history, events, and keyboard hints visible in short desktop terminals. Narrow terminals use stacked metrics and add history/events when space permits. The processor signal runs at three times its original pace to make the demo visibly active; its readout, sparkline, and history stay synchronized. Its animation pauses while hidden, and leaving the dashboard stops its timer.
 
 ## Files and commands
 

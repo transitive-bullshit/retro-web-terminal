@@ -81,8 +81,9 @@ class Screen {
   }
 }
 
-function sample(metric: number, tick: number) {
-  const t = tick / 5
+function sample(metric: number, tick: number, historyOffset = 0) {
+  const speed = metric === 0 ? 3 : 1
+  const t = (tick * speed - historyOffset) / 5
   if (metric === 1)
     return 0.39 + Math.sin(t * 0.19) * 0.045 + Math.sin(t * 0.83) * 0.014
   if (metric === 2) {
@@ -96,7 +97,7 @@ function sample(metric: number, tick: number) {
 
 function sparkline(metric: number, tick: number, width: number) {
   return Array.from({ length: Math.max(0, width) }, (_, x) => {
-    const value = sample(metric, tick - (width - 1 - x) * 2)
+    const value = sample(metric, tick, (width - 1 - x) * 2)
     return blocks[Math.max(1, Math.min(8, Math.round(value * 8)))]
   }).join('')
 }
@@ -125,7 +126,7 @@ function drawHistory(
 ) {
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      const value = sample(metric, tick - (width - x - 1) * 2)
+      const value = sample(metric, tick, (width - x - 1) * 2)
       const coverage = value * height - (height - y - 1)
       const level = Math.max(0, Math.min(8, Math.round(coverage * 8)))
       const grid = x % 8 === 0 ? '┊' : y % 3 === 0 ? '·' : ' '
@@ -303,7 +304,7 @@ export function dashboardLines(
   )
   const axisY = plotTop + plotHeight
   screen.text(4, axisY, '└' + '─'.repeat(graphWidth), colors.line)
-  screen.text(5, axisY + 1, '−30s', colors.muted)
+  screen.text(5, axisY + 1, 'PAST', colors.muted)
   screen.text(plotLeft + graphWidth - 3, axisY + 1, 'NOW', colors.muted)
 
   if (hasSidebar) {
