@@ -2,6 +2,8 @@
 
 Verified 2026-09-12 on an Apple M3 Pro MacBook Pro (12 CPU cores, 18 GPU cores, 36 GB RAM), macOS 26.3. Node 26.8.1 and pnpm 12.3.4. No experimental browser flags were required.
 
+The original MVP results below predate Zod removal. See the [settings refactor follow-up](#settings-refactor-follow-up) for current checks and the [settings contract](architecture.md#public-contract) for TypeScript types and JSON presets.
+
 ## Automated checks
 
 - `pnpm fix:format` and `pnpm fix:lint`: applied the repository conventions.
@@ -40,6 +42,14 @@ The built tarball was installed into a separate React + Vite consumer under the 
 A separate production-preview smoke test verified visible DialKit controls, shell file write/read, and return to the dashboard with no page errors.
 
 The demo includes locally bundled IBM Plex Mono and the production-enabled DialKit controls. All effect groups were checked for toggles and keyboard slider changes. Layout checks at widths 1440, 800, 430, 390, and 375 found no horizontal overflow. The narrower mobile frame gives the screen 46px more width: 311/326/366px at 375/390/430px viewports. Framed, bare, and shell views fit those mobile widths without page errors; the 1440px desktop screen remains 958px wide. Broader mobile polish is still outside the supported desktop target.
+
+## Settings refactor follow-up
+
+Rechecked on 2026-09-12 after replacing Zod with TypeScript types and JSON presets. Formatting, lint, TypeScript, all 22 unit tests, and the package/demo production builds pass. The theme/reset browser check passes in Chromium, Firefox, and WebKit, covering all presets, effects toggling, session preservation, Reset, and reload.
+
+A fresh tarball installed into an isolated React + Vite consumer under `work/zod-removal/consumer`. Its public types passed strict checking, its CSS and component imports built successfully, and its production dependency tree contains no Zod. Built JavaScript and declarations contain neither Zod references nor `settingsSchema`.
+
+A Vite comparison bundling the package's ESM entry with React and xterm external shrank from 115,332 to 28,023 bytes minified (30,377 to 8,441 bytes gzip). All preset values and parameter ranges match the previous implementation. Runtime validation was intentionally removed; unit tests now cover nested merging, independent settings objects, omitted values, and JSON overrides.
 
 ## Limits and tooling notes
 

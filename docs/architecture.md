@@ -1,6 +1,6 @@
 # Component and renderer
 
-The MVP has two workspaces: `packages/retro-terminal` exports the React component and validated settings; `apps/demo` supplies a Vite playground, DialKit controls, browser shell, dashboard, and optional frame. Demo development aliases the package to source. The library builds independently with tsdown as ESM, declarations, and an exported stylesheet. Vercel Web Analytics is mounted once in `apps/demo/src/main.tsx` as a demo-only dependency.
+The MVP has two workspaces: `packages/retro-terminal` exports the React component, settings types, and presets; `apps/demo` supplies a Vite playground, DialKit controls, browser shell, dashboard, and optional frame. Demo development aliases the package to source. The library builds independently with tsdown as ESM, declarations, and an exported stylesheet. Vercel Web Analytics is mounted once in `apps/demo/src/main.tsx` as a demo-only dependency.
 
 ## Deployment
 
@@ -25,7 +25,11 @@ Install the published package with `pnpm add retro-web-terminal`. Import the com
 
 The ref and ready callback receive `write(string | Uint8Array, callback?)`, `focus()`, `clear()`, `getSize()`, and `getSelection()`. Writes before initialization are queued. `clear()` follows xterm's clear behavior; applications can write ANSI erase/control sequences when they need precise screen operations. Input/output is imperative and does not flow through React state.
 
-`settingsSchema`, `resolveSettings`, `parameterRanges`, and `themes` are public. Zod defines defaults and bounds. `resolveSettings(theme, overrides)` merges built-in nested settings and returns an independent validated value. Invalid/unknown parameters throw at the configuration boundary. Each of glow, scanlines, phosphor texture, curvature, persistence, RGB shift, noise, flicker, glitch, and vignette has an `enabled` switch. `effectsEnabled` bypasses the whole effects canvas. Brightness and contrast are global adjustments.
+`RetroSettings` describes a complete configuration and `RetroSettingsInput` describes nested overrides. Preset values and `parameterRanges` come from `packages/retro-terminal/src/settings.json`. `resolveSettings(theme, overrides)` merges the selected preset with overrides and returns fresh nested objects; modifying the result does not change a preset or another resolved configuration. `parameterRanges` provides advisory UI bounds. The package does not validate types or ranges at runtime, clamp values, or reject unknown settings. Validate untrusted configuration in the host application.
+
+`resolveSettings`, `parameterRanges`, and `themes` remain public. The `settingsSchema` export and Zod dependency have been removed. Consumers should import `RetroSettings` or `RetroSettingsInput` instead of deriving types from the schema, and call `resolveSettings` when they need preset merging.
+
+Each of glow, scanlines, phosphor texture, curvature, persistence, RGB shift, noise, flicker, glitch, and vignette has an `enabled` switch. `effectsEnabled` bypasses the whole effects canvas. Brightness and contrast are global adjustments.
 
 Theme changes update the palette, reset incompatible phosphor history, and preserve the session. Applications that offer a Reset action should resolve the chosen theme again, as the demo does. The demo's Reset also remounts the terminal to start a fresh session and restart diagnostics. The package has no saved settings, user preset registry, public shader plugins, or runtime dependency on the demo.
 

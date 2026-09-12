@@ -42,7 +42,7 @@ export function TerminalExample() {
 
 This example echoes input. Connect `onData`, `onResize`, and `write()` to your own terminal transport for a real session. The reusable package does not include the demo shell, controls, fonts, or frame. It uses a system monospace fallback; load IBM Plex Mono yourself to match the demo.
 
-The ref exposes `write`, `focus`, `clear`, `getSize`, and `getSelection`. `onReady` can return a cleanup function. Settings are validated by Zod; nested overrides merge with the selected preset. Theme and setting changes preserve terminal contents. See the [component and renderer guide](docs/architecture.md) for the complete contract and integration limits.
+The ref exposes `write`, `focus`, `clear`, `getSize`, and `getSelection`. `onReady` can return a cleanup function. Settings use TypeScript types and JSON presets; nested overrides merge with the selected preset without runtime validation or clamping. Theme and setting changes preserve terminal contents. See the [component and renderer guide](docs/architecture.md) for the complete contract and integration limits.
 
 ## Run the demo locally
 

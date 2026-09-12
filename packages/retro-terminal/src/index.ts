@@ -1,11 +1,6 @@
 export { RetroTerminal } from './RetroTerminal'
 export type { RetroTerminalHandle, RetroTerminalProps } from './RetroTerminal'
-export {
-  parameterRanges,
-  resolveSettings,
-  settingsSchema,
-  themes
-} from './settings'
+export { parameterRanges, resolveSettings, themes } from './settings'
 export type {
   RetroSettings,
   RetroSettingsInput,

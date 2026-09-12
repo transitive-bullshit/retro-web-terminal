@@ -1,0 +1,285 @@
+{
+  "parameterRanges": {
+    "brightness": {
+      "min": 0.5,
+      "max": 1.8,
+      "step": 0.01
+    },
+    "contrast": {
+      "min": 0.7,
+      "max": 1.6,
+      "step": 0.01
+    },
+    "glow": {
+      "intensity": {
+        "min": 0,
+        "max": 1.5,
+        "step": 0.01
+      },
+      "radius": {
+        "min": 0.5,
+        "max": 6,
+        "step": 0.1
+      }
+    },
+    "scanlines": {
+      "intensity": {
+        "min": 0,
+        "max": 0.8,
+        "step": 0.01
+      },
+      "density": {
+        "min": 0.5,
+        "max": 2,
+        "step": 0.05
+      }
+    },
+    "phosphor": {
+      "intensity": {
+        "min": 0,
+        "max": 0.7,
+        "step": 0.01
+      }
+    },
+    "curvature": {
+      "amount": {
+        "min": 0,
+        "max": 0.3,
+        "step": 0.005
+      }
+    },
+    "persistence": {
+      "decay": {
+        "min": 0.02,
+        "max": 1.5,
+        "step": 0.01
+      },
+      "intensity": {
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    "rgbShift": {
+      "amount": {
+        "min": 0,
+        "max": 8,
+        "step": 0.1
+      }
+    },
+    "noise": {
+      "intensity": {
+        "min": 0,
+        "max": 0.12,
+        "step": 0.001
+      }
+    },
+    "flicker": {
+      "intensity": {
+        "min": 0,
+        "max": 0.15,
+        "step": 0.001
+      },
+      "speed": {
+        "min": 0.1,
+        "max": 30,
+        "step": 0.1
+      }
+    },
+    "glitch": {
+      "intensity": {
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      },
+      "frequency": {
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    "vignette": {
+      "intensity": {
+        "min": 0,
+        "max": 0.8,
+        "step": 0.01
+      }
+    }
+  },
+  "themes": {
+    "amber": {
+      "label": "Amber",
+      "description": "Warm phosphor. Late nights at the mainframe.",
+      "accent": "#ffc078",
+      "background": "#0b0805",
+      "foreground": "#ffc078",
+      "monochrome": true,
+      "settings": {
+        "effectsEnabled": true,
+        "brightness": 1.05,
+        "contrast": 1.06,
+        "glow": {
+          "enabled": true,
+          "intensity": 0.52,
+          "radius": 2.4
+        },
+        "scanlines": {
+          "enabled": true,
+          "intensity": 0.22,
+          "density": 1
+        },
+        "phosphor": {
+          "enabled": true,
+          "intensity": 0.15
+        },
+        "curvature": {
+          "enabled": true,
+          "amount": 0.065
+        },
+        "persistence": {
+          "enabled": true,
+          "decay": 0.18,
+          "intensity": 0.5
+        },
+        "rgbShift": {
+          "enabled": false,
+          "amount": 0.7
+        },
+        "noise": {
+          "enabled": true,
+          "intensity": 0.012
+        },
+        "flicker": {
+          "enabled": true,
+          "intensity": 0.008,
+          "speed": 8
+        },
+        "glitch": {
+          "enabled": false,
+          "intensity": 0.24,
+          "frequency": 0.15
+        },
+        "vignette": {
+          "enabled": true,
+          "intensity": 0.3
+        }
+      }
+    },
+    "green": {
+      "label": "Green Phosphor",
+      "description": "A little slower to fade. A little harder to forget.",
+      "accent": "#91ed8c",
+      "background": "#060b07",
+      "foreground": "#91ed8c",
+      "monochrome": true,
+      "settings": {
+        "effectsEnabled": true,
+        "brightness": 1.08,
+        "contrast": 1.06,
+        "glow": {
+          "enabled": true,
+          "intensity": 0.62,
+          "radius": 2.6
+        },
+        "scanlines": {
+          "enabled": true,
+          "intensity": 0.25,
+          "density": 1
+        },
+        "phosphor": {
+          "enabled": true,
+          "intensity": 0.19
+        },
+        "curvature": {
+          "enabled": true,
+          "amount": 0.065
+        },
+        "persistence": {
+          "enabled": true,
+          "decay": 0.3,
+          "intensity": 0.65
+        },
+        "rgbShift": {
+          "enabled": false,
+          "amount": 0.7
+        },
+        "noise": {
+          "enabled": true,
+          "intensity": 0.012
+        },
+        "flicker": {
+          "enabled": true,
+          "intensity": 0.008,
+          "speed": 8
+        },
+        "glitch": {
+          "enabled": false,
+          "intensity": 0.24,
+          "frequency": 0.15
+        },
+        "vignette": {
+          "enabled": true,
+          "intensity": 0.3
+        }
+      }
+    },
+    "color": {
+      "label": "Color CRT",
+      "description": "Full color. Slightly out of alignment.",
+      "accent": "#9bc5ff",
+      "background": "#080a10",
+      "foreground": "#d8e0ed",
+      "monochrome": false,
+      "settings": {
+        "effectsEnabled": true,
+        "brightness": 1.05,
+        "contrast": 1.06,
+        "glow": {
+          "enabled": true,
+          "intensity": 0.32,
+          "radius": 1.7
+        },
+        "scanlines": {
+          "enabled": true,
+          "intensity": 0.18,
+          "density": 1
+        },
+        "phosphor": {
+          "enabled": true,
+          "intensity": 0.12
+        },
+        "curvature": {
+          "enabled": true,
+          "amount": 0.045
+        },
+        "persistence": {
+          "enabled": true,
+          "decay": 0.11,
+          "intensity": 0.35
+        },
+        "rgbShift": {
+          "enabled": true,
+          "amount": 0.8
+        },
+        "noise": {
+          "enabled": true,
+          "intensity": 0.012
+        },
+        "flicker": {
+          "enabled": true,
+          "intensity": 0.008,
+          "speed": 8
+        },
+        "glitch": {
+          "enabled": false,
+          "intensity": 0.24,
+          "frequency": 0.15
+        },
+        "vignette": {
+          "enabled": true,
+          "intensity": 0.22
+        }
+      }
+    }
+  }
+}
