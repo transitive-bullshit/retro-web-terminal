@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>retro / terminal — three edits</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%2310130f%22/%3E%3Cpath d=%22M7 10l7 6-7 6m11 0h7%22 fill=%22none%22 stroke=%22%23ffbd65%22 stroke-width=%222.5%22/%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #10130f;
+        --panel: #1c2117;
+        --text: #e9ead6;
+        --muted: #9da58b;
+        --accent: #ffbd65;
+        --line: #3b4330;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(ellipse at 20% 0%, #252b1d 0, transparent 60%),
+          var(--bg);
+        color: var(--text);
+        min-height: 100svh;
+      }
+      main {
+        max-width: 1320px;
+        margin: auto;
+        padding: 34px 28px 60px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 24px;
+        margin-bottom: 28px;
+      }
+      .eyebrow {
+        font-size: 12px;
+        color: var(--accent);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin: 0 0 12px;
+      }
+      h1 {
+        font-size: clamp(26px, 4vw, 42px);
+        font-weight: 500;
+        letter-spacing: -0.06em;
+        margin: 0 0 12px;
+      }
+      .intro {
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--muted);
+        margin: 0;
+        max-width: 730px;
+      }
+      a {
+        color: var(--text);
+        text-underline-offset: 4px;
+      }
+      header a {
+        white-space: nowrap;
+        font-size: 13px;
+        margin-top: 22px;
+      }
+      .tabs {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      button {
+        font: inherit;
+        color: var(--text);
+        cursor: pointer;
+        background: #22291c;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 12px 18px;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+      }
+      button:hover {
+        border-color: var(--muted);
+        background: #303826;
+      }
+      button[aria-selected='true'] {
+        background: var(--accent);
+        color: #15180f;
+        border-color: var(--accent);
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 4px;
+      }
+      .number {
+        opacity: 0.55;
+        margin-right: 10px;
+      }
+      .player {
+        position: relative;
+        aspect-ratio: 16/9;
+        background: #090c08;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .player video {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .player video[hidden] {
+        display: none;
+      }
+      .status {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 14px 0 22px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .status strong {
+        font-weight: 500;
+        color: var(--text);
+      }
+      .chapters {
+        display: grid;
+        grid-template-columns: 3fr 4.2fr 3.6fr 3.6fr 3.6fr;
+        gap: 4px;
+      }
+      .chapters button {
+        text-align: left;
+        padding: 14px 13px;
+        font-size: 12px;
+        border-radius: 4px;
+        line-height: 1.7;
+        white-space: nowrap;
+      }
+      .chapters time {
+        display: block;
+        font-size: 10px;
+        color: var(--muted);
+      }
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 27px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      footer p {
+        margin: 0;
+      }
+      footer nav {
+        display: flex;
+        gap: 22px;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      @media (max-width: 700px) {
+        main {
+          padding: 24px 14px;
+        }
+        header {
+          display: block;
+        }
+        header a {
+          display: inline-block;
+          margin-top: 16px;
+        }
+        .tabs {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 4px;
+        }
+        .tabs button {
+          padding: 12px 5px;
+          font-size: 11px;
+        }
+        .number {
+          display: none;
+        }
+        .chapters {
+          grid-template-columns: repeat(5, 1fr);
+        }
+        .chapters button {
+          padding: 9px 4px;
+          text-align: center;
+          font-size: 9px;
+        }
+        .chapters time {
+          font-size: 9px;
+        }
+        .status {
+          flex-direction: column;
+          gap: 6px;
+        }
+        footer nav {
+          gap: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <p class="eyebrow">retro / terminal — edit comparison</p>
+          <h1>Same terminal. Three takes.</h1>
+          <p class="intro">
+            18 seconds · 1080p · 60 fps. Identical footage, cut points, and
+            music, with each editor creating its own text and motion. Switch
+            versions at the same moment.
+          </p>
+        </div>
+        <a href="README.md">Production notes ↗</a>
+      </header>
+      <div class="tabs" role="tablist" aria-label="Video editor">
+        <button
+          role="tab"
+          id="tab-hyperframes"
+          aria-controls="panel-hyperframes"
+          aria-selected="true"
+          data-tool="hyperframes"
+        >
+          <span class="number">01</span>Hyperframes
+        </button>
+        <button
+          role="tab"
+          id="tab-davinci"
+          aria-controls="panel-davinci"
+          aria-selected="false"
+          tabindex="-1"
+          data-tool="davinci"
+        >
+          <span class="number">02</span>DaVinci Resolve
+        </button>
+        <button
+          role="tab"
+          id="tab-remotion"
+          aria-controls="panel-remotion"
+          aria-selected="false"
+          tabindex="-1"
+          data-tool="remotion"
+        >
+          <span class="number">03</span>Remotion
+        </button>
+      </div>
+      <div class="player">
+        <video
+          id="panel-hyperframes"
+          aria-labelledby="tab-hyperframes"
+          role="tabpanel"
+          src="retro-terminal-hyperframes.mp4"
+          controls
+          playsinline
+          preload="metadata"
+        ></video>
+        <video
+          id="panel-davinci"
+          aria-labelledby="tab-davinci"
+          role="tabpanel"
+          src="retro-terminal-davinci.mp4"
+          controls
+          playsinline
+          preload="metadata"
+          hidden
+        ></video>
+        <video
+          id="panel-remotion"
+          aria-labelledby="tab-remotion"
+          role="tabpanel"
+          src="retro-terminal-remotion.mp4"
+          controls
+          playsinline
+          preload="metadata"
+          hidden
+        ></video>
+      </div>
+      <div class="status">
+        <span id="method"
+          ><strong>Hyperframes</strong> · HTML, CSS, and GSAP</span
+        ><span>Time, playback, and volume carry across when you switch.</span>
+      </div>
+      <div class="chapters" aria-label="Jump to a scene">
+        <button data-time="0.2"><time>00:00</time>Amber</button
+        ><button data-time="3.2"><time>00:03</time>Shell</button
+        ><button data-time="7.4"><time>00:07.2</time>Color CRT</button
+        ><button data-time="12.2"><time>00:10.8</time>React</button
+        ><button data-time="15.8"><time>00:14.4</time>GitHub</button>
+      </div>
+      <footer>
+        <p>
+          Lights Burn Dimmer · 0:18 excerpt<br />Download an MP4 to share; these
+          files have not been posted.
+        </p>
+        <nav aria-label="Download videos">
+          <a href="retro-terminal-hyperframes.mp4" download>Hyperframes ↓</a
+          ><a href="retro-terminal-davinci.mp4" download>Resolve ↓</a
+          ><a href="retro-terminal-remotion.mp4" download>Remotion ↓</a>
+        </nav>
+      </footer>
+      <p id="announcement" class="sr-only" aria-live="polite"></p>
+    </main>
+    <script>
+      const tabs = [...document.querySelectorAll('[role=tab]')]
+      const videos = Object.fromEntries(
+        tabs.map((tab) => [
+          tab.dataset.tool,
+          document.getElementById(tab.getAttribute('aria-controls'))
+        ])
+      )
+      const methods = {
+        hyperframes: '<strong>Hyperframes</strong> · HTML, CSS, and GSAP',
+        davinci:
+          '<strong>DaVinci Resolve</strong> · Native timeline and Fusion titles',
+        remotion: '<strong>Remotion</strong> · React composition'
+      }
+      let active = 'hyperframes'
+      let switching = 0
+      async function select(tool) {
+        if (tool === active) return
+        const token = ++switching
+        const previous = videos[active]
+        const next = videos[tool]
+        const time = previous.currentTime
+        const playing = !previous.paused && !previous.ended
+        previous.pause()
+        next.muted = previous.muted
+        next.volume = previous.volume
+        next.playbackRate = previous.playbackRate
+        if (next.readyState === 0)
+          await new Promise((resolve) =>
+            next.addEventListener('loadedmetadata', resolve, { once: true })
+          )
+        if (token !== switching) return
+        next.currentTime = Math.min(time, Math.max(0, next.duration - 0.05))
+        previous.hidden = true
+        next.hidden = false
+        active = tool
+        tabs.forEach((tab) => {
+          const selected = tab.dataset.tool === tool
+          tab.setAttribute('aria-selected', String(selected))
+          tab.tabIndex = selected ? 0 : -1
+        })
+        document.getElementById('method').innerHTML = methods[tool]
+        document.getElementById('announcement').textContent =
+          `${tabs.find((tab) => tab.dataset.tool === tool).textContent.trim()} selected`
+        if (playing) next.play().catch(() => {})
+      }
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => select(tab.dataset.tool))
+        tab.addEventListener('keydown', (event) => {
+          const delta =
+            event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
+          if (!delta && event.key !== 'Home' && event.key !== 'End') return
+          event.preventDefault()
+          const nextIndex =
+            event.key === 'Home'
+              ? 0
+              : event.key === 'End'
+                ? tabs.length - 1
+                : (index + delta + tabs.length) % tabs.length
+          tabs[nextIndex].focus()
+          select(tabs[nextIndex].dataset.tool)
+        })
+      })
+      document.querySelectorAll('[data-time]').forEach((button) =>
+        button.addEventListener('click', () => {
+          videos[active].currentTime = Number(button.dataset.time)
+        })
+      )
+    </script>
+  </body>
+</html>
