@@ -26,6 +26,10 @@ pnpm exec playwright install
 pnpm test:browser
 ```
 
+## Deploy to Vercel
+
+Import the repository with Root Directory left empty. The checked-in `vercel.json` runs the workspace build and publishes `apps/demo/dist`. No environment variables are required.
+
 ## Embed in React
 
 The library lives in `packages/retro-terminal`. It is ready to pack locally; this repository does not imply an npm release has been published.

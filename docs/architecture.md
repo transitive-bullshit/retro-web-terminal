@@ -2,6 +2,10 @@
 
 The MVP has two workspaces: `packages/retro-terminal` exports the React component and validated settings; `apps/demo` supplies a Vite playground, DialKit controls, browser shell, dashboard, and optional frame. Demo development aliases the package to source. The library builds independently with tsdown as ESM, declarations, and an exported stylesheet. Vercel Web Analytics is mounted once in `apps/demo/src/main.tsx` as a demo-only dependency.
 
+## Deployment
+
+Vercel builds from the repository root. The root `vercel.json` selects Vite, runs `pnpm build`, and serves `apps/demo/dist`. Keep Vercel’s Root Directory empty; the demo is a workspace within this root build. No environment variables are required for the demo.
+
 ## Public contract
 
 | Prop | Meaning |
