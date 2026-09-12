@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "5.3.0",
+    "@vercel/analytics": "2.0.1",
     "dialkit": "2.0.2",
     "just-bash": "3.4.2",
     "motion": "13.2.0",
