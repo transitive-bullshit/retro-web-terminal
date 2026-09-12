@@ -1,0 +1,51 @@
+@import '@xterm/xterm/css/xterm.css';
+
+.retro-terminal {
+  --retro-background: #0b0805;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  min-width: 160px;
+  min-height: 100px;
+  overflow: hidden;
+  background: var(--retro-background);
+  border-radius: 16px / 12px;
+}
+
+.retro-terminal__source {
+  position: absolute;
+  inset: 20px 24px;
+}
+
+.retro-terminal__source .xterm {
+  height: 100%;
+}
+
+.retro-terminal__source .xterm-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff24 transparent;
+}
+
+.retro-terminal__effects {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.retro-terminal__source .xterm-accessibility {
+  z-index: 6;
+}
+
+.retro-terminal__source .xterm:focus-visible {
+  outline: none;
+}
+
+@media (max-width: 600px) {
+  .retro-terminal__source {
+    inset: 14px;
+  }
+}

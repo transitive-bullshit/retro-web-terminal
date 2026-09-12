@@ -1,4 +1,10 @@
+packages:
+  - packages/*
+  - apps/*
+
 allowBuilds:
+  '@mongodb-js/zstd': false
+  node-liblzma: false
   esbuild: true
   simple-git-hooks: true
 

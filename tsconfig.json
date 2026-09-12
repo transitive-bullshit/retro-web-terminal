@@ -2,16 +2,11 @@
   "extends": "@fisch0920/config/tsconfig-react",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "types": ["node"],
     "paths": {
-      "@/*": ["./*"]
+      "retro-web-terminal": ["./packages/retro-terminal/src/index.ts"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "work"]
+  "include": ["*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules", "work", "dist"]
 }

@@ -1,38 +1,47 @@
 {
-  "name": "TODO",
+  "name": "retro-web-terminal-workspace",
   "version": "0.0.0",
   "private": true,
-  "description": "TODO",
+  "description": "An embeddable React terminal with real-time CRT effects and a browser shell playground",
   "license": "MIT",
   "author": "Travis Fischer <travis@transitivebullsh.it>",
   "repository": "https://github.com/transitive-bullshit/retro-web-terminal",
   "type": "module",
   "scripts": {
-    "dev": "portless run next dev --hostname 127.0.0.1",
-    "build": "next build",
-    "start": "next start",
+    "dev": "pnpm --filter @retro-web-terminal/demo dev",
+    "build": "pnpm --filter retro-web-terminal build && pnpm --filter @retro-web-terminal/demo build",
+    "build:package": "pnpm --filter retro-web-terminal build",
+    "preview": "pnpm --filter @retro-web-terminal/demo preview",
     "lint": "oxlint",
-    "test": "run-s test:*",
+    "test": "run-s test:format test:lint test:types test:unit",
     "test:format": "oxfmt --check",
     "test:lint": "oxlint",
-    "test:types": "next typegen && tsc --noEmit",
-    "fix": "run-s fix:*",
+    "test:types": "tsc --noEmit -p tsconfig.json && pnpm -r typecheck",
+    "test:unit": "vitest run",
+    "test:browser": "playwright test",
+    "fix": "run-s fix:format fix:lint",
     "fix:format": "oxfmt",
     "fix:lint": "oxlint --fix"
   },
   "devDependencies": {
     "@fisch0920/config": "^2.1.4",
+    "@playwright/test": "1.63.0",
     "@types/node": "^26.4.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "lint-staged": "^17.5.0",
     "npm-run-all2": "^9.0.3",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0",
     "oxlint-tsgolint": "^7.0.2001",
-    "portless": "^0.15.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
     "simple-git-hooks": "^2.14.0",
+    "tsdown": "0.23.0",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2",
-    "vitest": "^5.0.0"
+    "typescript": "7.0.2",
+    "vite": "8.3.0",
+    "vitest": "5.0.0"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
@@ -44,7 +53,7 @@
     ]
   },
   "engines": {
-    "node": ">=24"
+    "node": "^24.11.0 || >=26.0.0"
   },
   "packageManager": "pnpm@12.3.4"
 }
