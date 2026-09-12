@@ -89,6 +89,31 @@ test('opens a GPU-rendered sample dashboard with keyboard controls', async ({
   )
   await terminalInput(page).press('p')
   await expect(page.locator('.xterm-accessibility-tree')).toContainText('LIVE')
+  await expect(
+    page.getByRole('button', { name: 'Exit demo', exact: true })
+  ).toBeVisible()
+  await expect(page.locator('.xterm-accessibility-tree')).toContainText(
+    'Esc / q  EXIT TO SHELL'
+  )
+  await terminalInput(page).press('ArrowUp')
+  await expect(page.getByText('Diagnostics', { exact: true })).toBeVisible()
+  await terminalInput(page).press('Escape')
+  await expect(page.getByText('Local shell', { exact: true })).toBeVisible()
+  await expectPrompt(page)
+
+  await command(page, 'demo')
+  await expect(page.getByText('Diagnostics', { exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Green', exact: true }).focus()
+  await page.keyboard.press('Escape')
+  await expect(page.getByText('Local shell', { exact: true })).toBeVisible()
+  await expect(terminalInput(page)).toBeFocused()
+  await expectPrompt(page)
+
+  await command(page, 'demo')
+  await expect(page.getByText('Diagnostics', { exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Exit demo', exact: true }).click()
+  await expect(page.getByText('Local shell', { exact: true })).toBeVisible()
+  await expectPrompt(page)
 })
 
 test('runs Unix commands, retains files and directory, and returns from diagnostics', async ({

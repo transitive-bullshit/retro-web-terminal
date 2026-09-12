@@ -5,9 +5,9 @@ Verified 2026-09-12 on an Apple M3 Pro MacBook Pro (12 CPU cores, 18 GPU cores, 
 ## Automated checks
 
 - `pnpm fix:format` and `pnpm fix:lint`: applied the repository conventions.
-- `pnpm test`: formatting, lint, TypeScript, and 17 unit tests pass. Unit coverage includes schema validation, independent preset resolution, frame-rate-independent decay, curvature mapping, working-directory/file behavior, cancellation, dashboard modes, and compact layouts.
+- `pnpm test`: formatting, lint, TypeScript, and 19 unit tests pass. Unit coverage includes schema validation, independent preset resolution, frame-rate-independent decay, curvature mapping, working-directory/file behavior, cancellation, dashboard modes, and compact layouts.
 - `pnpm build`: the ESM/declaration/CSS library and static Vite demo build successfully.
-- `pnpm test:browser`: 27 checks across Chromium 153, Firefox 155, and Playwright WebKit 26.6. Covers dashboard interaction, real commands/files/directory changes, theme/reset/reload behavior, Cmd+K clear without executing a draft, selection/copy, resize, unavailable-WebGL fallback, actual GPU pixel placement and decay, failed shader cleanup, and cursor timer cleanup after context loss.
+- `pnpm test:browser`: 27 checks across Chromium 153, Firefox 155, and Playwright WebKit 26.6. Covers dashboard interaction and exiting with Escape or the visible button, real commands/files/directory changes, theme/reset/reload behavior, Cmd+K clear without executing a draft, selection/copy, resize, unavailable-WebGL fallback, actual GPU pixel placement and decay, failed shader cleanup, and cursor timer cleanup after context loss.
 
 The tests caught and drove fixes for partial effects-constructor resource cleanup and an undisposed cursor timer in WebGL addon 0.19.0. GPU tests sample actual framebuffer pixels after clearing the source, checking that trails fade and reset rather than remaining as stale frames.
 

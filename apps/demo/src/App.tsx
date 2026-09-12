@@ -138,7 +138,20 @@ export function App() {
         </div>
       </header>
 
-      <main className='console' aria-label='Interactive retro terminal demo'>
+      <main
+        className='console'
+        aria-label='Interactive retro terminal demo'
+        onKeyDown={(event) => {
+          if (
+            mode === 'dashboard' &&
+            event.key === 'Escape' &&
+            !event.defaultPrevented
+          ) {
+            event.preventDefault()
+            switchView()
+          }
+        }}
+      >
         <div className='console-controls'>
           <div
             className='theme-selector'
@@ -254,14 +267,25 @@ export function App() {
               <>
                 <kbd>p</kbd>
                 <span>pause</span>
-                <span aria-hidden='true'>·</span>
-                <kbd>q</kbd>
               </>
             ) : (
               <kbd>demo</kbd>
             )}
-            <button type='button' onClick={switchView}>
-              {mode === 'dashboard' ? 'open shell' : 'return to diagnostics'}
+            <button
+              className={mode === 'dashboard' ? 'exit-demo' : undefined}
+              type='button'
+              aria-label={mode === 'dashboard' ? 'Exit demo' : undefined}
+              aria-keyshortcuts={mode === 'dashboard' ? 'Escape' : undefined}
+              onClick={switchView}
+            >
+              {mode === 'dashboard' ? (
+                <>
+                  Exit demo
+                  <kbd aria-hidden='true'>Esc</kbd>
+                </>
+              ) : (
+                'return to diagnostics'
+              )}
             </button>
           </div>
         </div>
@@ -269,7 +293,11 @@ export function App() {
 
       <footer className='page-footer'>
         <p className='footer-caption'>
-          <strong>Type help in the shell to explore.</strong>
+          <strong>
+            {mode === 'dashboard'
+              ? 'Press Esc or click Exit demo to use the shell.'
+              : 'Type help in the shell to explore.'}
+          </strong>
           <br />
           Changes stay in this tab. Reload to start fresh.
         </p>

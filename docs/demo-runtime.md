@@ -6,7 +6,7 @@ The playground opens in PHOSPHOR / 01, an original ANSI/Unicode diagnostics dash
 
 | View | Input | Action |
 | --- | --- | --- |
-| Dashboard | `q` or Ctrl+C | Open the shell |
+| Dashboard | Esc, `q`, or Ctrl+C | Exit the demo and open the shell |
 | Dashboard | `p` or Space | Pause/resume sample telemetry |
 | Dashboard | `1`, `2`, `3` | Select processor, memory, or uplink history |
 | Shell | `demo` | Return to the dashboard |
@@ -19,6 +19,8 @@ The playground opens in PHOSPHOR / 01, an original ANSI/Unicode diagnostics dash
 | Shell | Ctrl+C | Discard the current line or interrupt execution |
 | Shell | Ctrl+L | Clear the screen and redraw the prompt |
 | Shell | Cmd+K | Submit `clear` at an idle prompt, replacing any draft command |
+
+The **Exit demo** button below the screen also opens the shell. The dashboard footer shows the Esc shortcut, and running `demo` in the shell reopens the dashboard.
 
 Long commands scroll horizontally while editing and appear in full when submitted. Bracketed paste inserts text, including newlines, without submitting it; Enter executes the complete script. Path completion reads directory entries and does not evaluate shell expressions. Quoted filenames work when executing commands.
 

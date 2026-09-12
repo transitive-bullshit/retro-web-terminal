@@ -20,6 +20,7 @@ export function createDemoSession(port: DemoPort): DemoSession {
     input(data) {
       if (disposed) return
       if (mode === 'shell') shell.input(data)
+      else if (data === '\x1b') session.showShell()
       else {
         for (const key of data) {
           if (key === 'q' || key === '\x03') {

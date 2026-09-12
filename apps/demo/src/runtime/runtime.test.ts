@@ -96,37 +96,46 @@ describe('browser shell', () => {
 })
 
 describe('demo session', () => {
-  it('restores the shell screen and modes, then stops dashboard timers on exit and disposal', () => {
-    vi.useFakeTimers()
-    const terminal = harness()
-    const session = createDemoSession(terminal.port)
-    sessions.push(session)
-    const changes = vi.fn<(mode: string) => void>()
-    session.subscribe(changes)
-    expect(session.getMode()).toBe('dashboard')
-    expect(terminal.chunks.join('')).toContain('\x1b[?1049h')
-    expect(terminal.output()).toContain('SAMPLE DATA')
-    vi.advanceTimersByTime(250)
-    session.input('q')
-    expect(session.getMode()).toBe('shell')
-    expect(terminal.chunks.join('')).toContain('\x1b[?1049l')
-    expect(terminal.chunks.join('')).toContain('\x1b[?2004h')
-    terminal.clear()
-    vi.advanceTimersByTime(1000)
-    expect(terminal.chunks).toEqual([])
-    session.input('demo\r')
-    expect(session.getMode()).toBe('dashboard')
-    expect(changes.mock.calls.map(([mode]) => mode)).toEqual([
-      'shell',
-      'dashboard'
-    ])
-    session.dispose()
-    terminal.clear()
-    vi.advanceTimersByTime(1000)
-    session.input('q')
-    session.resize(30, 10)
-    expect(terminal.chunks).toEqual([])
-  })
+  it.each([
+    { name: 'q', key: 'q' },
+    { name: 'Escape', key: '\x1b' },
+    { name: 'Ctrl+C', key: '\x03' }
+  ])(
+    '$name restores the shell screen and stops dashboard timers',
+    ({ key }) => {
+      vi.useFakeTimers()
+      const terminal = harness()
+      const session = createDemoSession(terminal.port)
+      sessions.push(session)
+      const changes = vi.fn<(mode: string) => void>()
+      session.subscribe(changes)
+      expect(session.getMode()).toBe('dashboard')
+      expect(terminal.chunks.join('')).toContain('\x1b[?1049h')
+      expect(terminal.output()).toContain('SAMPLE DATA')
+      vi.advanceTimersByTime(250)
+      session.input('\x1b[A')
+      expect(session.getMode()).toBe('dashboard')
+      session.input(key)
+      expect(session.getMode()).toBe('shell')
+      expect(terminal.chunks.join('')).toContain('\x1b[?1049l')
+      expect(terminal.chunks.join('')).toContain('\x1b[?2004h')
+      terminal.clear()
+      vi.advanceTimersByTime(1000)
+      expect(terminal.chunks).toEqual([])
+      session.input('demo\r')
+      expect(session.getMode()).toBe('dashboard')
+      expect(changes.mock.calls.map(([mode]) => mode)).toEqual([
+        'shell',
+        'dashboard'
+      ])
+      session.dispose()
+      terminal.clear()
+      vi.advanceTimersByTime(1000)
+      session.input('q')
+      session.resize(30, 10)
+      expect(terminal.chunks).toEqual([])
+    }
+  )
 
   it('allows editing, history, completion and resize without losing a command', async () => {
     const terminal = harness()

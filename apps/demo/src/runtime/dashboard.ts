@@ -224,7 +224,12 @@ export function dashboardLines(
         colors.muted
       )
     screen.rule(footer)
-    screen.text(1, height - 1, 'q shell · p pause · 1/2/3 metric', colors.muted)
+    screen.text(
+      1,
+      height - 1,
+      'Esc / q shell · p pause · 1/2/3 metric',
+      colors.ink
+    )
     return screen.lines()
   }
 
@@ -334,9 +339,9 @@ export function dashboardLines(
     1,
     height - 1,
     width < 65
-      ? 'q shell   p pause   1/2/3 metric'
-      : 'q  SHELL    p / SPACE  PAUSE    1 / 2 / 3  METRIC',
-    colors.muted
+      ? 'Esc / q  EXIT TO SHELL   p pause   1/2/3 metric'
+      : 'Esc / q  EXIT TO SHELL    p / SPACE  PAUSE    1 / 2 / 3  METRIC',
+    colors.ink
   )
   return screen.lines()
 }
