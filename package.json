@@ -1,0 +1,50 @@
+{
+  "name": "TODO",
+  "version": "0.0.0",
+  "private": true,
+  "description": "TODO",
+  "license": "MIT",
+  "author": "Travis Fischer <travis@transitivebullsh.it>",
+  "repository": "https://github.com/transitive-bullshit/retro-web-terminal",
+  "type": "module",
+  "scripts": {
+    "dev": "portless run next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start",
+    "lint": "oxlint",
+    "test": "run-s test:*",
+    "test:format": "oxfmt --check",
+    "test:lint": "oxlint",
+    "test:types": "next typegen && tsc --noEmit",
+    "fix": "run-s fix:*",
+    "fix:format": "oxfmt",
+    "fix:lint": "oxlint --fix"
+  },
+  "devDependencies": {
+    "@fisch0920/config": "^2.1.4",
+    "@types/node": "^26.4.1",
+    "lint-staged": "^17.5.0",
+    "npm-run-all2": "^9.0.3",
+    "oxfmt": "^0.66.0",
+    "oxlint": "^1.81.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "portless": "^0.15.6",
+    "simple-git-hooks": "^2.14.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "oxfmt --no-error-on-unmatched-pattern",
+      "oxlint --fix"
+    ]
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@12.3.4"
+}
