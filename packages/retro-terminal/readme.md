@@ -2,6 +2,16 @@
 
 An embeddable React terminal with GPU-rendered CRT effects, built on xterm.js and WebGL2. Includes Amber, Green Phosphor, and Color CRT presets with individually configurable glow, scanlines, curvature, phosphor trails, color separation, noise, flicker, glitches, and vignette.
 
+## Install
+
+Install from npm in your React 18+ app:
+
+```sh
+pnpm add retro-web-terminal
+```
+
+## Usage
+
 ```tsx
 import { useRef } from 'react'
 import { RetroTerminal, type RetroTerminalHandle } from 'retro-web-terminal'

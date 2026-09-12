@@ -6,38 +6,12 @@ An embeddable React terminal with real-time CRT effects: phosphor glow, curved g
 
 The browser playground opens into an animated diagnostics dashboard. Press Esc or click **Exit demo** for a local shell, try `help`, and run `demo` to return. All dashboard data is simulated. **Reset** clears the terminal session, restores the current theme settings, and restarts the demo. Reload also starts fresh.
 
-## Run locally
-
-Use Node 24.11+ or 26+ and pnpm.
-
-```sh
-pnpm install
-pnpm dev
-```
-
-Open the address printed by Vite. Tune the display with the control button at the lower right. The optional monitor frame belongs only to the demo.
-
-```sh
-pnpm fix:format
-pnpm fix:lint
-pnpm test
-pnpm build
-pnpm exec playwright install
-pnpm test:browser
-```
-
-## Deploy to Vercel
-
-Import the repository with Root Directory left empty. The checked-in `vercel.json` runs the workspace build and publishes `apps/demo/dist`. No environment variables are required.
-
 ## Embed in React
 
-The library lives in `packages/retro-terminal`. It is ready to pack locally; this repository does not imply an npm release has been published.
+Install the package from npm in your React 18+ app:
 
 ```sh
-pnpm build:package
-pnpm --filter retro-web-terminal pack --pack-destination ./work
-# In your React app, install the resulting .tgz with pnpm add.
+pnpm add retro-web-terminal
 ```
 
 Import the stylesheet once and give the component a height. Browser resources are created after mounting; use a client component in server-rendered frameworks.
@@ -69,6 +43,30 @@ export function TerminalExample() {
 This example echoes input. Connect `onData`, `onResize`, and `write()` to your own terminal transport for a real session. The reusable package does not include the demo shell, controls, fonts, or frame. It uses a system monospace fallback; load IBM Plex Mono yourself to match the demo.
 
 The ref exposes `write`, `focus`, `clear`, `getSize`, and `getSelection`. `onReady` can return a cleanup function. Settings are validated by Zod; nested overrides merge with the selected preset. Theme and setting changes preserve terminal contents. See the [component and renderer guide](docs/architecture.md) for the complete contract and integration limits.
+
+## Run the demo locally
+
+Clone this repository, then use Node 24.11+ or 26+ and pnpm from the repository root.
+
+```sh
+pnpm install
+pnpm dev
+```
+
+Open the address printed by Vite. Tune the display with the control button at the lower right. The optional monitor frame belongs only to the demo.
+
+```sh
+pnpm fix:format
+pnpm fix:lint
+pnpm test
+pnpm build
+pnpm exec playwright install
+pnpm test:browser
+```
+
+## Deploy the demo to Vercel
+
+Import the repository with Root Directory left empty. The checked-in `vercel.json` runs the workspace build and publishes `apps/demo/dist`. No environment variables are required.
 
 ## Browser support
 

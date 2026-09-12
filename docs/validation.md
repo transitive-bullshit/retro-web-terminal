@@ -50,4 +50,4 @@ The demo includes locally bundled IBM Plex Mono and the production-enabled DialK
 - Vite reports large chunks for the included UI/runtime dependencies; the 1.28 MB (353 KB gzip) shell bundle loads only when the shell is first used. Its bundled `rg` implementation references Node's `zlib`, which Vite externalizes: compressed `rg -z` searches are unsupported in this browser demo. Ordinary text search and the documented filesystem commands work.
 - tsdown reports that its TypeScript 7 API integration is experimental. Emitted declarations were independently typechecked in the packed consumer. JavaScript and declaration maps are included.
 
-Temporary screenshots, traces, browser probes, and consumer fixtures live under ignored `work/` or test output directories. No package publication or public deployment was performed.
+Temporary screenshots, traces, browser probes, and consumer fixtures live under ignored `work/` or test output directories. Package publication and public deployment were outside the scope of this validation.

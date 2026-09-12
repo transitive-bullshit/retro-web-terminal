@@ -6,7 +6,11 @@ The MVP has two workspaces: `packages/retro-terminal` exports the React componen
 
 Vercel builds from the repository root. The root `vercel.json` selects Vite, runs `pnpm build`, and serves `apps/demo/dist`. Keep Vercel’s Root Directory empty; the demo is a workspace within this root build. No environment variables are required for the demo.
 
+The demo's static Open Graph and Twitter metadata lives in `apps/demo/index.html`. Both use the 1200 × 630 preview at `apps/demo/public/og-image.png`, based on the README screenshot in `docs/demo.png`. Update the preview when that screenshot changes; metadata URLs use the production origin `https://retro-web-terminal.vercel.app`.
+
 ## Public contract
+
+Install the published package with `pnpm add retro-web-terminal`. Import the component and types from `retro-web-terminal`, and import `retro-web-terminal/styles.css` once in your app. React 18+ is a peer dependency. See the [React example](../readme.md#embed-in-react) for setup.
 
 | Prop | Meaning |
 | --- | --- |
