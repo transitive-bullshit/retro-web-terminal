@@ -2,6 +2,8 @@
 
 An embeddable React terminal with real-time CRT effects: phosphor glow, curved glass, scanlines, fading trails, color separation, grain, flicker, and glitches. Built on xterm.js and WebGL2, with Amber, Green Phosphor, and Color CRT presets.
 
+[![Retro Web Terminal showing the Amber diagnostics dashboard inside a CRT monitor frame](docs/demo.png)](https://retro-web-terminal.transitivebullsh.it/)
+
 The browser playground opens into an animated diagnostics dashboard. Press `q` for a local shell, try `help`, and run `demo` to return. All dashboard data is simulated. Files and settings reset on reload.
 
 ## Run locally
