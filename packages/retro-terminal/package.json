@@ -1,6 +1,6 @@
 {
   "name": "retro-web-terminal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An embeddable React terminal with GPU-rendered CRT effects",
   "license": "MIT",
   "author": "Travis Fischer <travis@transitivebullsh.it>",
