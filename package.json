@@ -21,7 +21,9 @@
     "test:browser": "playwright test",
     "fix": "run-s fix:format fix:lint",
     "fix:format": "oxfmt",
-    "fix:lint": "oxlint --fix"
+    "fix:lint": "oxlint --fix",
+    "prerelease": "pnpm build",
+    "release": "bumpp -r && pnpm publish -r"
   },
   "devDependencies": {
     "@fisch0920/config": "^2.1.4",
@@ -29,6 +31,7 @@
     "@types/node": "^26.4.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "bumpp": "^12.3.0",
     "lint-staged": "^17.5.0",
     "npm-run-all2": "^9.0.3",
     "oxfmt": "^0.66.0",
