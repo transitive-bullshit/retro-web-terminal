@@ -23,7 +23,7 @@ The ref and ready callback receive `write(string | Uint8Array, callback?)`, `foc
 
 `settingsSchema`, `resolveSettings`, `parameterRanges`, and `themes` are public. Zod defines defaults and bounds. `resolveSettings(theme, overrides)` merges built-in nested settings and returns an independent validated value. Invalid/unknown parameters throw at the configuration boundary. Each of glow, scanlines, phosphor texture, curvature, persistence, RGB shift, noise, flicker, glitch, and vignette has an `enabled` switch. `effectsEnabled` bypasses the whole effects canvas. Brightness and contrast are global adjustments.
 
-Theme changes update the palette, reset incompatible phosphor history, and preserve the session. Applications that offer a Reset action should resolve the chosen theme again, as the demo does. The package has no saved settings, user preset registry, public shader plugins, or runtime dependency on the demo.
+Theme changes update the palette, reset incompatible phosphor history, and preserve the session. Applications that offer a Reset action should resolve the chosen theme again, as the demo does. The demo's Reset also remounts the terminal to start a fresh session and restart diagnostics. The package has no saved settings, user preset registry, public shader plugins, or runtime dependency on the demo.
 
 ## Rendering integration
 

@@ -60,6 +60,7 @@ export function App() {
   const [theme, setTheme] = useState<ThemeName>('amber')
   const [framed, setFramed] = useState(true)
   const [ready, setReady] = useState(false)
+  const [terminalKey, setTerminalKey] = useState(0)
   const [mode, setMode] = useState<DemoMode>('dashboard')
   const [renderer, setRenderer] = useState<'webgl' | 'fallback'>('webgl')
   const [size, setSize] = useState({ cols: 0, rows: 0 })
@@ -97,6 +98,13 @@ export function App() {
   const chooseTheme = (name: ThemeName) => {
     controls.reset(name)
     setTheme(name)
+  }
+
+  const reset = () => {
+    controls.reset(theme)
+    setReady(false)
+    setMode('dashboard')
+    setTerminalKey((value) => value + 1)
   }
 
   const switchView = () => {
@@ -194,9 +202,9 @@ export function App() {
             <button
               className='text-button'
               type='button'
-              onClick={() => controls.reset(theme)}
-              title='Reset the current theme'
-              aria-label='Reset the current theme'
+              onClick={reset}
+              title='Reset the terminal and current theme'
+              aria-label='Reset the terminal and current theme'
             >
               <ResetIcon />
               <span className='reset-label'>Reset</span>
@@ -228,6 +236,7 @@ export function App() {
               </div>
             ) : null}
             <RetroTerminal
+              key={terminalKey}
               className='retro-terminal'
               theme={theme}
               settings={controls.settings}
@@ -254,7 +263,7 @@ export function App() {
             <span className='sample-data'>
               {mode === 'dashboard'
                 ? 'Simulated data'
-                : 'Files reset on reload'}
+                : 'Files reset with Reset or reload'}
             </span>
             <span className='renderer-status' data-mode={renderer}>
               {renderer === 'fallback'
@@ -299,7 +308,7 @@ export function App() {
               : 'Type help in the shell to explore.'}
           </strong>
           <br />
-          Changes stay in this tab. Reload to start fresh.
+          Changes stay in this tab. Reset or reload to start fresh.
         </p>
         <div className='footer-actions'>
           <button

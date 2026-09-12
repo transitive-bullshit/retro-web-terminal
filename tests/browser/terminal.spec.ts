@@ -157,7 +157,7 @@ test('runs Unix commands, retains files and directory, and returns from diagnost
   await expectPrompt(page, '~/themes')
 })
 
-test('theme changes and reset preserve the session; reload starts fresh', async ({
+test('theme changes preserve the session; Reset and reload start fresh', async ({
   page
 }) => {
   await openDemo(page)
@@ -189,15 +189,40 @@ test('theme changes and reset preserve the session; reload starts fresh', async 
   await expectLine(page, 'effects_off')
   await expectPrompt(page)
 
-  await page.getByRole('button', { name: 'Reset the current theme' }).click()
+  await command(page, 'echo overwritten > welcome.txt; cd themes')
+  await expectPrompt(page, '~/themes')
+  await terminalInput(page).pressSequentially('echo discarded-draft')
+  await page
+    .getByRole('button', { name: 'Reset the terminal and current theme' })
+    .click()
   await expect(effects).toHaveAttribute('aria-checked', 'true')
   await expect(
     page.getByRole('button', { name: 'Color CRT', exact: true })
   ).toHaveAttribute('aria-pressed', 'true')
   await expectGpuDisplay(page)
-  await command(page, 'clear; cat visit.txt; printf "reset_%s\\n" complete')
-  await expectLine(page, 'theme_kept')
-  await expectLine(page, 'reset_complete')
+  await expect(page.getByText('Diagnostics', { exact: true })).toBeVisible()
+  await expect(page.locator('.xterm-accessibility-tree')).toContainText('LIVE')
+  await expect(page.locator('.xterm-accessibility-tree')).toContainText(
+    'PROCESSOR HISTORY'
+  )
+  await expect(terminalInput(page)).toBeFocused()
+  await openShell(page)
+  await expect(page.locator('.xterm-accessibility-tree')).not.toContainText(
+    'theme_kept'
+  )
+  await expect(page.locator('.xterm-accessibility-tree')).not.toContainText(
+    'discarded-draft'
+  )
+  await terminalInput(page).press('ArrowUp')
+  await expectPrompt(page)
+  await command(page, 'test ! -e visit.txt && head -2 welcome.txt')
+  await expectLine(
+    page,
+    'A little phosphor, a little noise, a lot of character.'
+  )
+  await expectPrompt(page)
+  await command(page, 'touch visit.txt')
+  await expectPrompt(page)
 
   await page.reload()
   await expect(
@@ -213,6 +238,42 @@ test('theme changes and reset preserve the session; reload starts fresh', async 
   )
   await expectLine(page, 'fresh')
   await expectPrompt(page)
+})
+
+test('Reset resumes paused diagnostics and cancels running shell work', async ({
+  page
+}) => {
+  await openDemo(page)
+  await terminalInput(page).press('p')
+  await terminalInput(page).press('2')
+  await expect(page.locator('.xterm-accessibility-tree')).toContainText(
+    'PAUSED'
+  )
+  await expect(page.locator('.xterm-accessibility-tree')).toContainText(
+    'MEMORY HISTORY'
+  )
+  const reset = page.getByRole('button', {
+    name: 'Reset the terminal and current theme'
+  })
+  await reset.click()
+  await expect(page.locator('.xterm-accessibility-tree')).toContainText('LIVE')
+  await expect(page.locator('.xterm-accessibility-tree')).toContainText(
+    'PROCESSOR HISTORY'
+  )
+  const firstFrame = await lines(page)
+  await expect.poll(() => lines(page)).not.toEqual(firstFrame)
+
+  await openShell(page)
+  await command(page, 'sleep 1; echo stale-output; touch late.txt')
+  await reset.click()
+  await expect(page.locator('.xterm-accessibility-tree')).toContainText('LIVE')
+  await openShell(page)
+  await command(page, 'sleep 1.2; test ! -e late.txt && echo fresh-session')
+  await expectLine(page, 'fresh-session')
+  await expectPrompt(page)
+  await expect(page.locator('.xterm-accessibility-tree')).not.toContainText(
+    'stale-output'
+  )
 })
 
 test('falls back to a usable DOM terminal when WebGL2 is unavailable', async ({

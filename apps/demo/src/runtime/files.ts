@@ -16,7 +16,7 @@ Try:
   cat notes.txt
   demo
 
-Files and the working directory last for this visit. Reload starts fresh.
+Files and the working directory last for this visit. Reset or reload starts fresh.
 Exported variables and shell functions reset between command submissions.
 There is no server, native process, network access or Python runtime here.
 `,
@@ -53,7 +53,7 @@ Tab           complete simple file and directory paths
 
 Paste inserts text into the prompt; Enter submits it.
 The prompt scrolls horizontally for long commands.
-Filesystem edits last until reload. Exports/functions do not persist.
+Filesystem edits last until Reset or reload. Exports/functions do not persist.
 Output is buffered until a command finishes; this is not a live PTY.
 `,
   [`${home}/samples/telemetry.csv`]: `second,cpu_percent,memory_gb,network_kbps

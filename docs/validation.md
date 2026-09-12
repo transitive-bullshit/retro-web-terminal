@@ -7,7 +7,9 @@ Verified 2026-09-12 on an Apple M3 Pro MacBook Pro (12 CPU cores, 18 GPU cores, 
 - `pnpm fix:format` and `pnpm fix:lint`: applied the repository conventions.
 - `pnpm test`: formatting, lint, TypeScript, and 19 unit tests pass. Unit coverage includes schema validation, independent preset resolution, frame-rate-independent decay, curvature mapping, working-directory/file behavior, cancellation, dashboard modes, and compact layouts.
 - `pnpm build`: the ESM/declaration/CSS library and static Vite demo build successfully.
-- `pnpm test:browser`: 27 checks across Chromium 153, Firefox 155, and Playwright WebKit 26.6. Covers dashboard interaction and exiting with Escape or the visible button, real commands/files/directory changes, theme/reset/reload behavior, Cmd+K clear without executing a draft, selection/copy, resize, unavailable-WebGL fallback, actual GPU pixel placement and decay, failed shader cleanup, and cursor timer cleanup after context loss.
+- `pnpm test:browser`: 30 checks across Chromium 153, Firefox 155, and Playwright WebKit 26.6. Covers dashboard interaction and exiting with Escape or the visible button, real commands/files/directory changes, theme changes, fresh sessions after Reset/reload, paused-demo restart and cancellation of running commands on Reset, Cmd+K clear without executing a draft, selection/copy, resize, unavailable-WebGL fallback, actual GPU pixel placement and decay, failed shader cleanup, and cursor timer cleanup after context loss.
+
+The Reset and mobile layout follow-up was rechecked on 2026-09-12 with Node 26.7.0.
 
 The tests caught and drove fixes for partial effects-constructor resource cleanup and an undisposed cursor timer in WebGL addon 0.19.0. GPU tests sample actual framebuffer pixels after clearing the source, checking that trails fade and reset rather than remaining as stale frames.
 
@@ -37,7 +39,7 @@ The built tarball was installed into a separate React + Vite consumer under the 
 
 A separate production-preview smoke test verified visible DialKit controls, shell file write/read, and return to the dashboard with no page errors.
 
-The demo includes locally bundled IBM Plex Mono and the production-enabled DialKit controls. All effect groups were checked for toggles and keyboard slider changes. Layout checks at widths 1440, 800, and 390 found no horizontal overflow. Mobile polish is still outside the supported desktop target.
+The demo includes locally bundled IBM Plex Mono and the production-enabled DialKit controls. All effect groups were checked for toggles and keyboard slider changes. Layout checks at widths 1440, 800, 430, 390, and 375 found no horizontal overflow. The narrower mobile frame gives the screen 46px more width: 311/326/366px at 375/390/430px viewports. Framed, bare, and shell views fit those mobile widths without page errors; the 1440px desktop screen remains 958px wide. Broader mobile polish is still outside the supported desktop target.
 
 ## Limits and tooling notes
 

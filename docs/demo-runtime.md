@@ -20,11 +20,11 @@ The playground opens in PHOSPHOR / 01, an original ANSI/Unicode diagnostics dash
 | Shell | Ctrl+L | Clear the screen and redraw the prompt |
 | Shell | Cmd+K | Submit `clear` at an idle prompt, replacing any draft command |
 
-The **Exit demo** button below the screen also opens the shell. The dashboard footer shows the Esc shortcut, and running `demo` in the shell reopens the dashboard.
+The **Exit demo** button below the screen also opens the shell. The dashboard footer shows the Esc shortcut, and running `demo` in the shell reopens the dashboard. **Reset** restores the current theme's display settings, clears the terminal and shell session, and restarts live diagnostics from the beginning with processor history selected.
 
 Long commands scroll horizontally while editing and appear in full when submitted. Bracketed paste inserts text, including newlines, without submitting it; Enter executes the complete script. Path completion reads directory entries and does not evaluate shell expressions. Quoted filenames work when executing commands.
 
-The dashboard adjusts its chart height to keep meters, history, events, and keyboard hints visible in short desktop terminals. Narrow terminals use stacked metrics and add history/events when space permits. The processor signal runs at three times its original pace to make the demo visibly active; its readout, sparkline, and history stay synchronized. Its animation pauses while hidden, and leaving the dashboard stops its timer.
+The dashboard adjusts its chart height to keep meters, history, events, and keyboard hints visible in short desktop terminals. Narrow terminals use stacked metrics and add history/events when space permits. Mobile layouts use 8px outer gutters and a 24px side bezel to give the terminal more screen width. The processor signal runs at three times its original pace to make the demo visibly active; its readout, sparkline, and history stay synchronized. Its animation pauses while hidden, and leaving the dashboard stops its timer.
 
 ## Files and commands
 
@@ -60,12 +60,12 @@ demo
 
 ## Session behavior and limits
 
-Filesystem changes, working directory, and prompt history last for this visit. Reload starts fresh. Exported variables and shell functions reset between submissions. Each submitted script executes once; the adapter carries forward its resulting working directory and previous-directory value.
+Filesystem changes, working directory, and prompt history last until **Reset** or reload. Both start a fresh session with the seeded files; Reset keeps the selected theme and frame preference. Exported variables and shell functions reset between submissions. Each submitted script executes once; the adapter carries forward its resulting working directory and previous-directory value.
 
 Output is buffered until execution completes, with stdout followed by stderr. This is a command-line REPL, without a live PTY, interactive full-screen editors, native processes, network commands, Python, Node, or SQLite. Compressed `rg -z` searches are also unavailable because the upstream browser bundle references Node zlib for that option. The adapter limits each execution to 2,000 commands, 10,000 loop iterations, and 256 KiB of output, alongside just-bash's other default limits.
 
 Cancellation is cooperative. Completed filesystem changes remain; canceled results cannot write stale output into a later prompt or dashboard. Subsequent executions wait for earlier work to settle before accessing the shared filesystem.
 
-The dashboard uses the terminal's alternate screen. Exiting restores the shell screen, cursor, autowrap, and bracketed-paste mode. Disposal stops timers, removes its visibility listener, aborts shell work, and restores terminal modes. Theme changes do not recreate this session.
+The dashboard uses the terminal's alternate screen. Exiting restores the shell screen, cursor, autowrap, and bracketed-paste mode. Disposal stops timers, removes its visibility listener, aborts shell work, and restores terminal modes. Theme changes do not recreate this session. Reset remounts the terminal, using the same disposal and initialization lifecycle to cancel old work, clear screen buffers and effects history, and create a new demo session.
 
 The implementation lives in [`apps/demo/src/runtime/`](../apps/demo/src/runtime/). Its entry point, `createDemoSession(port)`, accepts terminal output and size callbacks and exposes input, resize, mode changes/subscriptions, and disposal. The reusable terminal package does not include this demo runtime.

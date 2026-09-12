@@ -540,7 +540,7 @@ kbd {
 
 @media (max-width: 700px) {
   .workbench {
-    padding: 19px 12px 22px;
+    padding: 19px 8px 22px;
   }
   .page-header {
     padding-inline: 9px;
@@ -588,7 +588,7 @@ kbd {
   }
   .monitor {
     --bezel-top: 35px;
-    --bezel-side: 43px;
+    --bezel-side: 24px;
     --bezel-bottom: 44px;
   }
   .screen {
@@ -611,7 +611,6 @@ kbd {
     width: 5px;
     height: 2px;
     bottom: -16px;
-    right: -26px;
   }
   .terminal-status {
     padding: 16px 11px 0;

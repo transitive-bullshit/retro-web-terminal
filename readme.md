@@ -4,7 +4,7 @@ An embeddable React terminal with real-time CRT effects: phosphor glow, curved g
 
 [![Retro Web Terminal showing the Amber diagnostics dashboard inside a CRT monitor frame](docs/demo.png)](https://retro-web-terminal.vercel.app/)
 
-The browser playground opens into an animated diagnostics dashboard. Press Esc or click **Exit demo** for a local shell, try `help`, and run `demo` to return. All dashboard data is simulated. Files and settings reset on reload.
+The browser playground opens into an animated diagnostics dashboard. Press Esc or click **Exit demo** for a local shell, try `help`, and run `demo` to return. All dashboard data is simulated. **Reset** clears the terminal session, restores the current theme settings, and restarts the demo. Reload also starts fresh.
 
 ## Run locally
 
